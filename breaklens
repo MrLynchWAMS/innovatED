@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anti-Cheat Focus Guard Test</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+            transition: opacity 0.2s ease;
+        }
+
+        /* The Container for the "Test" */
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        h1 { color: #333; }
+        .question { margin-bottom: 25px; padding: 15px; border: 1px solid #eee; border-radius: 5px; }
+        .warning-box { background: #ffebee; color: #c62828; padding: 10px; margin-bottom: 20px; border-radius: 4px; border: 1px solid #ef9a9a; display: none;}
+        
+        /* The "Lockout" Overlay */
+        #lockout-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            color: white;
+            display: none; /* Hidden by default */
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            text-align: center;
+        }
+
+        #lockout-overlay h1 { color: #ff4444; font-size: 3em; margin: 0; }
+        #lockout-overlay p { font-size: 1.5em; margin-top: 20px; }
+        
+        /* Status Log for Debugging */
+        #status-log {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            width: 300px;
+            height: 150px;
+            background: #333;
+            color: #0f0;
+            font-family: monospace;
+            font-size: 12px;
+            overflow-y: auto;
+            padding: 10px;
+            border-radius: 5px;
+            opacity: 0.8;
+            z-index: 1000;
+        }
+
+        img { max-width: 100%; border-radius: 4px; }
+        button { padding: 10px 20px; background: #2196F3; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #1976D2; }
+
+    </style>
+</head>
+<body oncontextmenu="return false;"> <!-- Inline Right-Click Disable -->
+
+    <!-- THE LOCKOUT SCREEN (Hidden until blur detected) -->
+    <div id="lockout-overlay">
+        <h1>⚠️ TEST HIDDEN</h1>
+        <p>You have clicked outside the test window.</p>
+        <p>Please click anywhere to resume.</p>
+        <p style="font-size: 0.8em; color: #aaa; margin-top: 50px;">(Violation detected: <span id="violation-count">0</span>)</p>
+    </div>
+
+    <!-- ON-SCREEN LOG (To see what's happening) -->
+    <div id="status-log">
+        <div><strong>Event Log:</strong></div>
+        <div id="log-entries"></div>
+    </div>
+
+    <!-- THE "TEST" CONTENT -->
+    <div class="test-container" id="main-content">
+        <h1>Biology Unit 4: Ecosystems</h1>
+        <div class="warning-box" id="warning-msg">
+            <strong>Security Active:</strong> Right-Click disabled. Window focus monitored.
+        </div>
+
+        <div class="question">
+            <h3>Question 1</h3>
+            <p>Identify the primary consumer in the image below:</p>
+            <!-- A placeholder image to test drag-and-drop / context menu -->
+            <img src="https://via.placeholder.com/600x200?text=Try+Right+Clicking+Or+Dragging+This+Image" alt="Test Image">
+            <br><br>
+            <label><input type="radio" name="q1"> Wolf</label><br>
+            <label><input type="radio" name="q1"> Rabbit</label><br>
+            <label><input type="radio" name="q1"> Grass</label>
+        </div>
+
+        <div class="question">
+            <h3>Question 2</h3>
+            <p>Explain the process of photosynthesis in your own words.</p>
+            <textarea rows="4" style="width: 100%;" placeholder="Type answer here..."></textarea>
+        </div>
+
+        <button onclick="alert('This is just a test page!')">Submit Test</button>
+    </div>
+
+    <script>
+        // CONFIGURATION
+        let violationCount = 0;
+        const overlay = document.getElementById('lockout-overlay');
+        const violationDisplay = document.getElementById('violation-count');
+        const logEntries = document.getElementById('log-entries');
+
+        // HELPER: Add to on-screen log
+        function log(msg) {
+            const div = document.createElement('div');
+            div.textContent = `> ${new Date().toLocaleTimeString()}: ${msg}`;
+            logEntries.prepend(div);
+        }
+
+        // 1. DISABLE RIGHT CLICK (Context Menu)
+        document.addEventListener('contextmenu', event => {
+            event.preventDefault();
+            log("Blocked Right-Click attempt");
+        });
+
+        // 2. DISABLE DRAG AND DROP (Prevents dragging images to sidebar)
+        document.addEventListener('dragstart', event => {
+            event.preventDefault();
+            log("Blocked Drag-and-Drop attempt");
+        });
+
+        // 3. WINDOW BLUR (User left the window / Clicked sidebar)
+        window.addEventListener('blur', () => {
+            violationCount++;
+            violationDisplay.textContent = violationCount;
+            log("WINDOW BLUR DETECTED (Sidebar/Tab switch)");
+            
+            // Activate Lockout
+            overlay.style.display = 'flex';
+            document.title = "⚠️ RETURN TO TEST";
+        });
+
+        // 4. WINDOW FOCUS (User returned to test)
+        window.addEventListener('focus', () => {
+            log("Window Focus Restored");
+            
+            // Optional: You could require a password or teacher click to resume here
+            // For now, we just hide the overlay so you can test repeatedly
+            overlay.style.display = 'none';
+            document.title = "Anti-Cheat Focus Guard Test";
+        });
+
+        // 5. KEYBOARD SHORTCUT BLOCKER (Optional - attempts to block Ctrl+Shift+S etc)
+        document.addEventListener('keydown', function(e) {
+            // Example: Block F12 (Dev tools) or Ctrl+P (Print)
+            if (e.key === 'F12' || (e.ctrlKey && e.key === 'p')) {
+                e.preventDefault();
+                log("Blocked Restricted Key: " + e.key);
+            }
+        });
+
+        log("System Ready. Monitoring active.");
+    </script>
+</body>
+</html>
