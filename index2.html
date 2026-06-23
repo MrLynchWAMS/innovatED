@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>innovātED | Project Showcase</title>
+  <meta name="description" content="innovātED project portfolio showcasing GitHub repositories, Chrome extensions, and educational productivity tools." />
+  <style>
+    :root{
+      --bg:#0b1020;
+      --card:#121933;
+      --card-2:#1a2448;
+      --text:#ecf0ff;
+      --muted:#b7c0e6;
+      --brand:#7dd3fc;
+      --accent:#a78bfa;
+      --success:#34d399;
+      --warning:#fbbf24;
+      --border:#2d3a72;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius:18px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{
+      margin:0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: radial-gradient(circle at 20% 0%, #172554, var(--bg) 40%);
+      color:var(--text);
+      scroll-behavior:smooth;
+    }
+
+    a{color:var(--brand);text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    .container{
+      width:min(1200px, 92%);
+      margin-inline:auto;
+    }
+
+    header{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter: blur(10px);
+      background: rgba(11,16,32,.8);
+      border-bottom:1px solid rgba(125,211,252,.15);
+    }
+
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:14px 0;
+      gap:1rem;
+    }
+
+    .brand{
+      font-size:1.2rem;
+      font-weight:700;
+      letter-spacing:.3px;
+    }
+
+    .brand span{
+      color:var(--brand);
+    }
+
+    .nav-links{
+      display:flex;
+      gap:.85rem;
+      flex-wrap:wrap;
+    }
+
+    .nav-links a{
+      padding:8px 12px;
+      border:1px solid transparent;
+      border-radius:999px;
+      color:var(--muted);
+      font-size:.95rem;
+    }
+
+    .nav-links a:hover{
+      color:var(--text);
+      border-color:var(--border);
+      background:rgba(167,139,250,.1);
+      text-decoration:none;
+    }
+
+    .hero{
+      padding:80px 0 50px;
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:2rem;
+      align-items:center;
+    }
+
+    .hero h1{
+      margin:0 0 12px;
+      font-size:clamp(2rem, 4.2vw, 3.3rem);
+      line-height:1.1;
+    }
+
+    .hero p{
+      color:var(--muted);
+      font-size:1.05rem;
+      line-height:1.6;
+      margin-bottom:22px;
+    }
+
+    .pill-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.6rem;
+      margin-bottom:20px;
+    }
+
+    .pill{
+      padding:7px 12px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(125,211,252,.08);
+      font-size:.82rem;
+      color:#d9e2ff;
+    }
+
+    .cta-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.8rem;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:.45rem;
+      padding:11px 16px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:var(--card);
+      color:var(--text);
+      font-weight:600;
+      box-shadow:var(--shadow);
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, var(--brand), var(--accent));
+      color:#111827;
+      border:none;
+    }
+
+    .hero-card{
+      background:linear-gradient(160deg, var(--card), var(--card-2));
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:22px;
+      box-shadow:var(--shadow);
+    }
+
+    .stat-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:12px;
+      margin-top:14px;
+    }
+
+    .stat{
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:12px;
+    }
+
+    .stat h3{
+      margin:0;
+      font-size:1.55rem;
+      color:var(--brand);
+    }
+
+    .stat p{
+      margin:4px 0 0;
+      color:var(--muted);
+      font-size:.88rem;
+    }
+
+    section{
+      padding:24px 0 50px;
+    }
+
+    .section-title{
+      display:flex;
+      align-items:baseline;
+      justify-content:space-between;
+      gap:1rem;
+      margin-bottom:16px;
+    }
+
+    .section-title h2{
+      margin:0;
+      font-size:1.6rem;
+    }
+
+    .section-title small{
+      color:var(--muted);
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:14px;
+    }
+
+    .card{
+      background:linear-gradient(160deg, var(--card), #0f1733);
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:14px;
+      min-height:165px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+
+    .card h3{
+      margin:0;
+      font-size:1.02rem;
+    }
+
+    .muted{color:var(--muted)}
+    .tiny{font-size:.82rem}
+    .spacer{flex:1}
+
+    .tag-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.4rem;
+    }
+
+    .tag{
+      font-size:.72rem;
+      color:#dbeafe;
+      background:rgba(52,211,153,.12);
+      border:1px solid rgba(52,211,153,.35);
+      border-radius:999px;
+      padding:4px 8px;
+    }
+
+    .tools-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:14px;
+    }
+
+    .tool-card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:14px;
+    }
+
+    footer{
+      border-top:1px solid var(--border);
+      color:var(--muted);
+      text-align:center;
+      padding:24px 0 40px;
+      font-size:.9rem;
+    }
+
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr}
+      .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    }
+
+    @media (max-width:640px){
+      .grid,.tools-grid{grid-template-columns:1fr}
+      .nav{flex-direction:column;align-items:flex-start}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">innovāt<span>ED</span></div>
+      <nav class="nav-links">
+        <a href="#projects">Projects</a>
+        <a href="#chrome">Chrome Extensions</a>
+        <a href="#tools">Tools</a>
+        <a href="#about">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero" id="about">
+      <div>
+        <h1>Building practical tools for educators through <span style="color:var(--brand)">innovātED</span></h1>
+        <p>
+          Welcome to innovātED — a portfolio of classroom-focused automation tools, productivity extensions, and education-first software projects.
+          This site highlights all GitHub projects and published Chrome Web Store extensions in one place.
+        </p>
+        <div class="pill-row">
+          <span class="pill">Education Technology</span>
+          <span class="pill">Chrome Extensions</span>
+          <span class="pill">Automation Workflows</span>
+          <span class="pill">Teacher Productivity</span>
+        </div>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#projects">Explore Projects</a>
+          <a class="btn" href="#chrome">View Chrome Products</a>
+        </div>
+      </div>
+
+      <aside class="hero-card">
+        <h3 style="margin-top:0">Portfolio Snapshot</h3>
+        <p class="muted tiny">A quick summary of innovātED projects and published tools.</p>
+        <div class="stat-grid">
+          <div class="stat">
+            <h3>26</h3>
+            <p>GitHub Repositories</p>
+          </div>
+          <div class="stat">
+            <h3>8</h3>
+            <p>Chrome Extensions</p>
+          </div>
+          <div class="stat">
+            <h3>184+</h3>
+            <p>Total Known Users</p>
+          </div>
+          <div class="stat">
+            <h3>2023–2026</h3>
+            <p>Active Development</p>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section id="projects">
+      <div class="section-title">
+        <h2>GitHub Projects</h2>
+        <small>All 26 repositories can be listed here</small>
+      </div>
+
+      <div class="grid">
+        <!-- Replace these placeholders with your actual repo names + links -->
+        <!-- Duplicate/adapt until all 26 repos are represented -->
+        <article class="card">
+          <h3>Project 01</h3>
+          <p class="muted tiny">Short project description focused on purpose and impact.</p>
+          <div class="tag-row">
+            <span class="tag">JavaScript</span><span class="tag">Automation</span>
+          </div>
+          <div class="spacer"></div>
+          <a href="https://github.com/MrLynchWAMS/REPO_NAME_01" target="_blank" rel="noopener">View Repository →</a>
+        </article>
+
+        <article class="card"><h3>Project 02</h3><p class="muted tiny">Short project description.</p><div class="tag-row"><span class="tag">Web</span></div><div class="spacer"></div><a href="https://github.com/MrLynchWAMS/REPO_NAME_02" target="_blank" rel="noopener">View Repository →</a></article>
+        <article class="card"><h3>Project 03</h3><p class="muted tiny">Short project description.</p><div class="tag-row"><span class="tag">Education</span></div><div class="spacer"></div><a href="https://github.com/MrLynchWAMS/REPO_NAME_03" target="_blank" rel="noopener">View Repository →</a></article>
+        <article class="card"><h3>Project 04</h3><p class="muted tiny">Short project description.</p><div class="tag-row"><span class="tag">Extension</span></div><div class="spacer"></div><a href="https://github.com/MrLynchWAMS/REPO_NAME_04" target="_blank" rel="noopener">View Repository →</a></article>
+        <article class="card"><h3>Project 05</h3><p class="muted tiny">Short project description.</p><div class="tag-row"><span class="tag">Node.js</span></div><div class="spacer"></div><a href="https://github.com/MrLynchWAMS/REPO_NAME_05" target="_blank" rel="noopener">View Repository →</a></article>
+        <article class="card"><h3>Project 06</h3><p class="muted tiny">Short project description.</p><div class="tag-row"><span class="tag">Data</span></div><div class="spacer"></div><a href="https://github.com/MrLynchWAMS/REPO_NAME_06" target="_blank" rel="noopener">View Repository →</a></article>
+        <article class="card"><h3>Project 07</h3><p class="muted tiny">Short project description.</p><div class="tag-row"><span class="tag">Productivity</span></div><div class="spacer"></div><a href="https://github.com/MrLynchWAMS/REPO_NAME_07" target="_blank" rel="noopener">View Repository →</a></article>
+        <article class="card"><h3>Project 08</h3><p class="muted tiny">Short project description.</p><div class="tag-row"><span class="tag">UI/UX</span></div><div class="spacer"></div><a href="https://github.com/MrLynchWAMS/REPO_NAME_08" target="_blank" rel="noopener">View Repository →</a></article>
+        <article class="card"><h3>Project 09</h3><p class="muted tiny">Short project description.</p><div class="tag-row"><span class="tag">APIs</span></div><div class="spacer"></div><a href="https://github.com/MrLynchWAMS/REPO_NAME_09" target="_blank" rel="noopener">View Repository →</a></article>
+        <article class="card"><h3>Project 10</h3><p class="muted tiny">Short project description.</p><div class="tag-row"><span class="tag">EdTech</span></div><div class="spacer"></div><a href="https://github.com/MrLynchWAMS/REPO_NAME_10" target="_blank" rel="noopener">View Repository →</a></article>
+        <article class="card"><h3>Project 11</h3><p class="muted tiny">Short project description.</p><div class="tag-row"><span class="tag">Frontend</span></div><div class="spacer"></div><a href="https://github.com/MrLynchWAMS/REPO_NAME_11" target="_blank" rel="noopener">View Repository →</a></article>
+        <article class="card"><h3>Project 12</h3><p class="muted tiny">Short project description.</p><div class="tag-row"><span class="tag">Backend</span></div><div class="spacer"></div><a href="https://github.com/MrLynchWAMS/REPO_NAME_12" target="_blank" rel="noopener">View Repository →</a></article>
+        <article class="card"><h3>Project 13</h3><p class="muted tiny">Short project description.</p><div class="tag-row"><span class="tag">Scripting</span></div><div class="spacer"></div><a href="https://github.com/MrLynchWAMS/REPO_NAME_13" target="_blank" rel="noopener">View Repository →</a></article>
+        <article class="card"><h3>Project 14</h3><p class="muted tiny">Short project description.</p><div class="tag-row"><span class="tag">Automation</span></div><div class="spacer"></div><a href="https://github.com/MrLynchWAMS/REPO_NAME_14" target="_blank" rel="noopener">View Repository →</a></article>
+        <article class="card"><h3>Project 15</h3><p class="muted tiny">Short project description.</p><div class="tag-row"><span class="tag">Chrome</span></div><div class="spacer"></div><a href="https://github.com/MrLynchWAMS/REPO_NAME_15" target="_blank" rel="noopener">View Repository →</a></article>
+        <article class="card"><h3>Project 16</h3><p class="muted tiny">Short project description.</p><div class="tag-row"><span class="tag">Teacher Tools</span></div><div class="spacer"></div><a href="https://github.com/MrLynchWAMS/REPO_NAME_16" target="_blank" rel="noopener">View Repository →</a></article>
+        <article class="card"><h3>Project 17</h3><p class="muted tiny">Short project description.</p><div class="tag-row"><span class="tag">Workflow</span></div><div class="spacer"></div><a href="https://github.com/MrLynchWAMS/REPO_NAME_17" target="_blank" rel="noopener">View Repository →</a></article>
+        <article class="card"><h3>Project 18</h3><p class="muted tiny">Short project description.</p><div class="tag-row"><span class="tag">JavaScript</span></div><div class="spacer"></div><a href="https://github.com/MrLynchWAMS/REPO_NAME_18" target="_blank" rel="noopener">View Repository →</a></article>
+        <article class="card"><h3>Project 19</h3><p class="muted tiny">Short project description.</p><div class="tag-row"><span class="tag">TypeScript</span></div><div class="spacer"></div><a href="https://github.com/MrLynchWAMS/REPO_NAME_19" target="_blank" rel="noopener">View Repository →</a></article>
+        <article class="card"><h3>Project 20</h3><p class="muted tiny">Short project description.</p><div class="tag-row"><span class="tag">Productivity</span></div><div class="spacer"></div><a href="https://github.com/MrLynchWAMS/REPO_NAME_20" target="_blank" rel="noopener">View Repository →</a></article>
+        <article class="card"><h3>Project 21</h3><p class="muted tiny">Short project description.</p><div class="tag-row"><span class="tag">No-Code</span></div><div class="spacer"></div><a href="https://github.com/MrLynchWAMS/REPO_NAME_21" target="_blank" rel="noopener">View Repository →</a></article>
+        <article class="card"><h3>Project 22</h3><p class="muted tiny">Short project description.</p><div class="tag-row"><span class="tag">Utility</span></div><div class="spacer"></div><a href="https://github.com/MrLynchWAMS/REPO_NAME_22" target="_blank" rel="noopener">View Repository →</a></article>
+        <article class="card"><h3>Project 23</h3><p class="muted tiny">Short project description.</p><div class="tag-row"><span class="tag">Innovation</span></div><div class="spacer"></div><a href="https://github.com/MrLynchWAMS/REPO_NAME_23" target="_blank" rel="noopener">View Repository →</a></article>
+        <article class="card"><h3>Project 24</h3><p class="muted tiny">Short project description.</p><div class="tag-row"><span class="tag">Integration</span></div><div class="spacer"></div><a href="https://github.com/MrLynchWAMS/REPO_NAME_24" target="_blank" rel="noopener">View Repository →</a></article>
+        <article class="card"><h3>Project 25</h3><p class="muted tiny">Short project description.</p><div class="tag-row"><span class="tag">Ed Productivity</span></div><div class="spacer"></div><a href="https://github.com/MrLynchWAMS/REPO_NAME_25" target="_blank" rel="noopener">View Repository →</a></article>
+        <article class="card"><h3>Project 26</h3><p class="muted tiny">Short project description.</p><div class="tag-row"><span class="tag">Open Source</span></div><div class="spacer"></div><a href="https://github.com/MrLynchWAMS/REPO_NAME_26" target="_blank" rel="noopener">View Repository →</a></article>
+      </div>
+    </section>
+
+    <section id="chrome">
+      <div class="section-title">
+        <h2>Chrome Web Store Products</h2>
+        <small>Published tools by innovātED</small>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <h3>SmartPass Student Report Generator</h3>
+          <p class="muted tiny">Version 1.0 · Published (Unlisted) · 1 user · Mar 31, 2026</p>
+          <p class="tiny">Generates student SmartPass reports quickly for administrators and teachers.</p>
+          <div class="spacer"></div>
+          <a href="#" target="_blank" rel="noopener">Chrome Web Store Link →</a>
+        </article>
+
+        <article class="card">
+          <h3>Formative Search Sidebar</h3>
+          <p class="muted tiny">Version 1.0.0 · ★ 5 · 16 users · Published (Public)</p>
+          <p class="tiny">Adds an in-browser sidebar for faster searching and navigation within Formative workflows.</p>
+          <div class="spacer"></div>
+          <a href="#" target="_blank" rel="noopener">Chrome Web Store Link →</a>
+        </article>
+
+        <article class="card">
+          <h3>GoFormative Dynamic Auto Scorer</h3>
+          <p class="muted tiny">Version 3.5 · 7 users · Published (Public)</p>
+          <p class="tiny">Auto-scores responses dynamically to reduce manual grading time and improve feedback speed.</p>
+          <div class="spacer"></div>
+          <a href="#" target="_blank" rel="noopener">Chrome Web Store Link →</a>
+        </article>
+
+        <article class="card">
+          <h3>Genesis Grade Automation</h3>
+          <p class="muted tiny">Version 1.0 · 5 users · Published (Public)</p>
+          <p class="tiny">Automates repetitive gradebook tasks in Genesis to streamline grading workflows.</p>
+          <div class="spacer"></div>
+          <a href="#" target="_blank" rel="noopener">Chrome Web Store Link →</a>
+        </article>
+
+        <article class="card">
+          <h3>BlackoutBars</h3>
+          <p class="muted tiny">Version 1.20 · ★ 5 · 15 users · Published (Public)</p>
+          <p class="tiny">Enhances focus and readability with customizable blackout bars and visual focus controls.</p>
+          <div class="spacer"></div>
+          <a href="#" target="_blank" rel="noopener">Chrome Web Store Link →</a>
+        </article>
+
+        <article class="card">
+          <h3>Tab Crab</h3>
+          <p class="muted tiny">Version 3.2 · ★ 4 · 15 users · Published (Public)</p>
+          <p class="tiny">Improves tab management and navigation to reduce context switching and browser clutter.</p>
+          <div class="spacer"></div>
+          <a href="#" target="_blank" rel="noopener">Chrome Web Store Link →</a>
+        </article>
+
+        <article class="card">
+          <h3>Dynalist Image Formatter</h3>
+          <p class="muted tiny">Version 1.1 · 117 users · Published (Public)</p>
+          <p class="tiny">Formats and organizes images in Dynalist for cleaner documentation and note workflows.</p>
+          <div class="spacer"></div>
+          <a href="#" target="_blank" rel="noopener">Chrome Web Store Link →</a>
+        </article>
+
+        <article class="card">
+          <h3>BetterGenesis</h3>
+          <p class="muted tiny">Version 0.9 · 8 users · Published (Public)</p>
+          <p class="tiny">Adds usability improvements and workflow enhancements for Genesis users.</p>
+          <div class="spacer"></div>
+          <a href="#" target="_blank" rel="noopener">Chrome Web Store Link →</a>
+        </article>
+      </div>
+    </section>
+
+    <section id="tools">
+      <div class="section-title">
+        <h2>Tools & Platforms</h2>
+        <small>Core technologies used across innovātED projects</small>
+      </div>
+
+      <div class="tools-grid">
+        <article class="tool-card">
+          <h3>JavaScript / TypeScript</h3>
+          <p class="muted tiny">Primary languages for building browser extensions and web interfaces.</p>
+        </article>
+        <article class="tool-card">
+          <h3>Chrome Extension APIs</h3>
+          <p class="muted tiny">Used for browser automation, UI overlays, content scripts, and productivity workflows.</p>
+        </article>
+        <article class="tool-card">
+          <h3>GitHub</h3>
+          <p class="muted tiny">Version control, open-source collaboration, documentation, and project portfolio hosting.</p>
+          <a href="https://github.com/MrLynchWAMS" target="_blank" rel="noopener">Visit GitHub Profile →</a>
+        </article>
+        <article class="tool-card">
+          <h3>Chrome Web Store</h3>
+          <p class="muted tiny">Distribution channel for innovātED’s education-focused browser tools.</p>
+          <a href="#" target="_blank" rel="noopener">View Developer Storefront →</a>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © <span id="year"></span> innovātED · Designed to showcase practical innovation in education technology.
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
